@@ -26,18 +26,18 @@ namespace Analytics.Internal
 
         public void TrackInfo(string eventName)
         {
-            TrackInfo(eventName, null, null);
+            TrackInfo(eventName, (IReadOnlyList<string>)null, (IReadOnlyList<string>)null);
         }
 
         public void TrackInfo(string eventName, string paramName, string paramValue)
         {
             if (string.IsNullOrEmpty(paramName))
             {
-                TrackInfo(eventName, null, null);
+                TrackInfo(eventName, (IReadOnlyList<string>)null, (IReadOnlyList<string>)null);
                 return;
             }
 
-            TrackInfo(eventName, new[] { paramName }, new[] { paramValue });
+            TrackInfo(eventName, (IReadOnlyList<string>)new[] { paramName }, (IReadOnlyList<string>)new[] { paramValue });
         }
 
         public void TrackInfo(string eventName, IReadOnlyList<string> paramNames, IReadOnlyList<string> paramValues)

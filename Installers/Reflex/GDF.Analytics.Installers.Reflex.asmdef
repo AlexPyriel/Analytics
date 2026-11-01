@@ -1,16 +1,15 @@
 {
     "name": "GDF.Analytics.Installers.Reflex",
-    "references": [
-        "GDF.Analytics",
-        "Reflex"
-    ],
+    "references": [ "GDF.Analytics", "Reflex" ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
+    "defineConstraints": [ "ANALYTICS_REFLEX" ],
+    "versionDefines": [
+        { "name": "com.gustavopsantos.reflex", "expression": "", "define": "ANALYTICS_REFLEX" }
+    ],
     "noEngineReferences": false
 }
