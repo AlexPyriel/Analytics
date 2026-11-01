@@ -1,0 +1,21 @@
+{
+  "name": "com.gdf.analytics",
+  "version": "1.0.0",
+  "displayName": "GDF Analytics",
+  "description": "Vendor-agnostic analytics facade for Unity. Composite dispatch across pluggable backends (GameAnalytics, Firebase, PlayFab, custom). Design events, errors, progression, purchase revenue, ad revenue. DI installers for VContainer / Zenject / Reflex.",
+  "unity": "6000.0",
+  "author": {
+    "name": "GDF"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AlexPyriel/Analytics.git"
+  },
+  "keywords": [
+    "analytics",
+    "events",
+    "telemetry",
+    "revenue",
+    "progression"
+  ]
+}

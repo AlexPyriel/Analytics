@@ -1,0 +1,16 @@
+{
+    "name": "GDF.Analytics.Installers.Reflex",
+    "references": [
+        "GDF.Analytics",
+        "Reflex"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
