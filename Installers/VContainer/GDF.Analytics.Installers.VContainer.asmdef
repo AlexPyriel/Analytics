@@ -1,16 +1,15 @@
 {
     "name": "GDF.Analytics.Installers.VContainer",
-    "references": [
-        "GDF.Analytics",
-        "VContainer"
-    ],
+    "references": [ "GDF.Analytics", "VContainer" ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
+    "defineConstraints": [ "ANALYTICS_VCONTAINER" ],
+    "versionDefines": [
+        { "name": "jp.hadashikick.vcontainer", "expression": "", "define": "ANALYTICS_VCONTAINER" }
+    ],
     "noEngineReferences": false
 }
