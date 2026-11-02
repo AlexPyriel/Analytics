@@ -29,7 +29,7 @@ Assembly name: `GDF.Analytics`
 Add this dependency to `Packages/manifest.json`:
 
 ```json
-"com.gdf.analytics": "https://github.com/AlexPyriel/Analytics.git#v1.0.0"
+"com.gdf.analytics": "https://github.com/AlexPyriel/Analytics.git#v1.0.1"
 ```
 
 For development tracking (not recommended for production), use `#main` instead of a tag.
@@ -37,7 +37,7 @@ For development tracking (not recommended for production), use `#main` instead o
 You can also install it from Unity Package Manager:
 
 - `Window -> Package Manager -> + -> Add package from git URL...`
-- `https://github.com/AlexPyriel/Analytics.git#v1.0.0`
+- `https://github.com/AlexPyriel/Analytics.git#v1.0.1`
 
 ## Usage
 
@@ -46,6 +46,10 @@ You can also install it from Unity Package Manager:
 VContainer:
 
 ```csharp
+using GDF.Analytics;
+using GDF.Analytics.Installers.VContainer;
+using VContainer;
+
 protected override void Configure(IContainerBuilder builder)
 {
     new AnalyticsVContainerInstaller()
@@ -58,6 +62,9 @@ protected override void Configure(IContainerBuilder builder)
 Zenject:
 
 ```csharp
+using GDF.Analytics;
+using GDF.Analytics.Installers.Zenject;
+
 AnalyticsZenjectInstaller.Install(Container, new IAnalyticsBackend[]
 {
     new DebugAnalyticsBackend(),
@@ -68,6 +75,9 @@ AnalyticsZenjectInstaller.Install(Container, new IAnalyticsBackend[]
 Reflex:
 
 ```csharp
+using GDF.Analytics;
+using GDF.Analytics.Installers.Reflex;
+
 public sealed class GameAnalyticsReflexInstaller : AnalyticsReflexInstaller
 {
     protected override IReadOnlyList<IAnalyticsBackend> BuildBackends() =>
@@ -78,12 +88,16 @@ public sealed class GameAnalyticsReflexInstaller : AnalyticsReflexInstaller
 ### 2. Initialize at startup
 
 ```csharp
+using GDF.Analytics;
+
 _analytics.Init();
 ```
 
 ### 3. Fire events anywhere
 
 ```csharp
+using GDF.Analytics;
+
 _analytics.TrackInfo("level:completed", "level_id", "1_3");
 _analytics.TrackProgression(EAnalyticsProgressionStatus.Complete, "world_1", "level_3");
 _analytics.TrackPurchaseRevenue("USD", 4.99f);
@@ -96,6 +110,8 @@ _analytics.TrackError("checkout_sdk_timeout");
 Implement `IAnalyticsBackend` once per vendor. Minimal GameAnalytics shim:
 
 ```csharp
+using GDF.Analytics;
+
 public sealed class GameAnalyticsBackend : IAnalyticsBackend
 {
     public string Name => "GameAnalytics";

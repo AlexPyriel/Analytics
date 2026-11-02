@@ -1,6 +1,6 @@
 {
   "name": "com.gdf.analytics",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "displayName": "GDF Analytics",
   "description": "Vendor-agnostic analytics facade for Unity. Composite dispatch across pluggable backends (GameAnalytics, Firebase, PlayFab, custom). Design events, errors, progression, purchase revenue, ad revenue. DI installers for VContainer / Zenject / Reflex.",
   "unity": "6000.0",
