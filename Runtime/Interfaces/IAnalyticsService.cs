@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Analytics
+namespace GDF.Analytics
 {
     /// <summary>
     /// Facade over one or more <see cref="IAnalyticsBackend"/> implementations. Dispatches every

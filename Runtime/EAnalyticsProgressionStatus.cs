@@ -1,4 +1,4 @@
-namespace Analytics
+namespace GDF.Analytics
 {
     /// <summary>
     /// Progression event status, mirrored on common vendor funnels (GameAnalytics, Firebase).

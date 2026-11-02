@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Analytics
+namespace GDF.Analytics
 {
     /// <summary>
     /// Vendor-side implementation of a single analytics backend (GameAnalytics, Firebase, mixpanel,

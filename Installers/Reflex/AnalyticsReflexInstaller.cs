@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using Analytics.Internal;
+using GDF.Analytics.Internal;
 using Reflex.Core;
 using UnityEngine;
 
-namespace Analytics.Installers.Reflex
+namespace GDF.Analytics.Installers.Reflex
 {
     /// <summary>
     /// Registers <see cref="IAnalyticsService"/> in a Reflex container with a single

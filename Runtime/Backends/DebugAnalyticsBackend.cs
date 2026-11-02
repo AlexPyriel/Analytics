@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-namespace Analytics
+namespace GDF.Analytics
 {
     /// <summary>
     /// Logs every analytics event into the Unity console. Default binding so games can see what the

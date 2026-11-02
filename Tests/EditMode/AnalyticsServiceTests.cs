@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Analytics.Internal;
+using GDF.Analytics.Internal;
 using NUnit.Framework;
 
-namespace Analytics.Tests.EditMode
+namespace GDF.Analytics.Tests.EditMode
 {
     /// <summary>
     /// Exercises <see cref="AnalyticsService"/> dispatch: every event fans out to every backend,

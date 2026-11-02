@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using VContainer;
+using VContainer.Unity;
 
-namespace Analytics.Installers.VContainer
+namespace GDF.Analytics.Installers.VContainer
 {
     /// <summary>
     /// Registers <see cref="IAnalyticsService"/> in a VContainer scope. Backends are supplied through

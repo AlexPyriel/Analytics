@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Analytics.Internal
+namespace GDF.Analytics.Internal
 {
     /// <summary>
     /// Default <see cref="IAnalyticsService"/> implementation. Dispatches every call to every

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using Analytics.Internal;
+using GDF.Analytics.Internal;
 using Zenject;
 
-namespace Analytics.Installers.Zenject
+namespace GDF.Analytics.Installers.Zenject
 {
     /// <summary>
     /// Registers <see cref="IAnalyticsService"/> in a Zenject container. Backends are supplied as a
