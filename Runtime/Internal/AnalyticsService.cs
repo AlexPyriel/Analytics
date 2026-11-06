@@ -9,26 +9,31 @@ namespace GDF.Analytics.Internal
     /// registered <see cref="IAnalyticsBackend"/>, catching per-backend exceptions so a vendor outage
     /// never propagates to the caller.
     /// </summary>
-    internal sealed class AnalyticsService : IAnalyticsService
+    public sealed class AnalyticsService : IAnalyticsService
     {
         private readonly IReadOnlyList<IAnalyticsBackend> _backends;
 
+        /// <summary>Creates the facade over the given backends; events fan out to each of them in order.</summary>
+        /// <param name="backends">Vendor backends; register at least <see cref="DebugAnalyticsBackend"/> when none are configured.</param>
         public AnalyticsService(IReadOnlyList<IAnalyticsBackend> backends)
         {
             _backends = backends ?? throw new ArgumentNullException(nameof(backends));
         }
 
+        /// <inheritdoc />
         public void Init()
         {
             for (int i = 0; i < _backends.Count; i++)
                 SafeInvoke(_backends[i], static b => b.Init());
         }
 
+        /// <inheritdoc />
         public void TrackInfo(string eventName)
         {
             TrackInfo(eventName, (IReadOnlyList<string>)null, (IReadOnlyList<string>)null);
         }
 
+        /// <inheritdoc />
         public void TrackInfo(string eventName, string paramName, string paramValue)
         {
             if (string.IsNullOrEmpty(paramName))
@@ -40,6 +45,7 @@ namespace GDF.Analytics.Internal
             TrackInfo(eventName, (IReadOnlyList<string>)new[] { paramName }, (IReadOnlyList<string>)new[] { paramValue });
         }
 
+        /// <inheritdoc />
         public void TrackInfo(string eventName, IReadOnlyList<string> paramNames, IReadOnlyList<string> paramValues)
         {
             if (string.IsNullOrEmpty(eventName))
@@ -53,6 +59,7 @@ namespace GDF.Analytics.Internal
                     static (b, state) => b.TrackInfo(state.eventName, state.paramNames, state.paramValues));
         }
 
+        /// <inheritdoc />
         public void TrackError(string error)
         {
             if (string.IsNullOrEmpty(error))
@@ -62,6 +69,7 @@ namespace GDF.Analytics.Internal
                 SafeInvoke(_backends[i], error, static (b, e) => b.TrackError(e));
         }
 
+        /// <inheritdoc />
         public void TrackProgression(EAnalyticsProgressionStatus status, string progression01, string progression02 = null)
         {
             if (string.IsNullOrEmpty(progression01))
@@ -75,6 +83,7 @@ namespace GDF.Analytics.Internal
                     static (b, state) => b.TrackProgression(state.status, state.progression01, state.progression02));
         }
 
+        /// <inheritdoc />
         public void TrackPurchaseRevenue(string currency, float price)
         {
             if (string.IsNullOrEmpty(currency))
@@ -88,6 +97,7 @@ namespace GDF.Analytics.Internal
                     static (b, state) => b.TrackPurchaseRevenue(state.currency, state.price));
         }
 
+        /// <inheritdoc />
         public void TrackAdsRevenue(string currency, float price)
         {
             if (string.IsNullOrEmpty(currency))

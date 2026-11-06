@@ -13,23 +13,20 @@ Assembly name: `GDF.Analytics`
 - `IAnalyticsBackend` contract for vendor adapters; register one per vendor you ship.
 - Composite dispatch: every event fans out to every backend. Per-backend exceptions are swallowed and logged — one vendor outage does not break the facade or neighbouring backends.
 - `DebugAnalyticsBackend` default — logs every event into the Unity console (useful during prototyping and playtest).
-- DI installers for VContainer, Zenject and Reflex.
+- VContainer installer; public `sealed` `AnalyticsService` for any other DI container.
 - Non-throwing API: empty event names, empty currencies and empty primary progression units are dropped with a warning rather than throwing on the caller.
 
 ## Requirements
 
 - Unity `6000.0+`
-- One of the supported DI containers (optional, required only when using the matching installer):
-  - `jp.hadashikick.vcontainer`
-  - `com.mathijsbakker.extenject`
-  - `com.gustavopsantos.reflex`
+- `jp.hadashikick.vcontainer` is required only when using the bundled installer.
 
 ## Installation (UPM via Git)
 
 Add this dependency to `Packages/manifest.json`:
 
 ```json
-"com.gdf.analytics": "https://github.com/AlexPyriel/Analytics.git#v1.0.1"
+"com.gdf.analytics": "https://github.com/AlexPyriel/Analytics.git#v2.0.0"
 ```
 
 For development tracking (not recommended for production), use `#main` instead of a tag.
@@ -37,7 +34,7 @@ For development tracking (not recommended for production), use `#main` instead o
 You can also install it from Unity Package Manager:
 
 - `Window -> Package Manager -> + -> Add package from git URL...`
-- `https://github.com/AlexPyriel/Analytics.git#v1.0.1`
+- `https://github.com/AlexPyriel/Analytics.git#v2.0.0`
 
 ## Usage
 
@@ -59,31 +56,7 @@ protected override void Configure(IContainerBuilder builder)
 }
 ```
 
-Zenject:
-
-```csharp
-using GDF.Analytics;
-using GDF.Analytics.Installers.Zenject;
-
-AnalyticsZenjectInstaller.Install(Container, new IAnalyticsBackend[]
-{
-    new DebugAnalyticsBackend(),
-    new GameAnalyticsBackend(),
-});
-```
-
-Reflex:
-
-```csharp
-using GDF.Analytics;
-using GDF.Analytics.Installers.Reflex;
-
-public sealed class GameAnalyticsReflexInstaller : AnalyticsReflexInstaller
-{
-    protected override IReadOnlyList<IAnalyticsBackend> BuildBackends() =>
-        new IAnalyticsBackend[] { new DebugAnalyticsBackend(), new GameAnalyticsBackend() };
-}
-```
+Other containers bind the public types directly; see [Using with Zenject / Reflex](#using-with-zenject--reflex).
 
 ### 2. Initialize at startup
 
@@ -137,10 +110,41 @@ public sealed class GameAnalyticsBackend : IAnalyticsBackend
 
 ## Assembly Definition Notes
 
-`GDF.Analytics` is a dedicated runtime assembly. DI installers live in their own assemblies
-(`GDF.Analytics.Installers.VContainer`, `.Zenject`, `.Reflex`) so games that only use one container
-do not pull in the others. The internal `AnalyticsService` is accessed by installers through
-`InternalsVisibleTo`, keeping the public API free of the orchestrator type.
+`GDF.Analytics` is a dedicated runtime assembly. The VContainer installer lives in
+`GDF.Analytics.Installers.VContainer` and compiles only when `jp.hadashikick.vcontainer` is installed.
+`GDF.Analytics.Internal.AnalyticsService` is `public sealed` so any container can construct it.
+
+## Using with Zenject / Reflex
+
+The package ships only a VContainer installer. Other containers register the backend list and bind the
+public service type directly.
+
+Zenject (`MonoInstaller` or `Installer`):
+
+```csharp
+using System.Collections.Generic;
+using GDF.Analytics;
+using GDF.Analytics.Internal;
+
+Container.BindInstance<IReadOnlyList<IAnalyticsBackend>>(new IAnalyticsBackend[]
+{
+    new DebugAnalyticsBackend(),
+    new GameAnalyticsBackend(),
+});
+Container.Bind<IAnalyticsService>().To<AnalyticsService>().AsSingle();
+```
+
+Reflex (`IInstaller`):
+
+```csharp
+using System.Collections.Generic;
+using GDF.Analytics;
+using GDF.Analytics.Internal;
+
+IAnalyticsBackend[] backends = { new DebugAnalyticsBackend(), new GameAnalyticsBackend() };
+builder.AddSingleton(backends, typeof(IReadOnlyList<IAnalyticsBackend>));
+builder.AddSingleton(typeof(AnalyticsService), typeof(IAnalyticsService));
+```
 
 ## License
 

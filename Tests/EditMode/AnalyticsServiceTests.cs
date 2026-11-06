@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using GDF.Analytics.Internal;
 using NUnit.Framework;
+using UnityEngine;
+using UnityEngine.TestTools;
 
 namespace GDF.Analytics.Tests.EditMode
 {
@@ -83,6 +86,7 @@ namespace GDF.Analytics.Tests.EditMode
             ThrowingBackend throwing = new ThrowingBackend();
             RecordingBackend survivor = new RecordingBackend("survivor");
             AnalyticsService service = new AnalyticsService(new IAnalyticsBackend[] { throwing, survivor });
+            LogAssert.Expect(LogType.Error, new Regex(@"\[Analytics\] Backend 'throwing' threw during dispatch"));
 
             Assert.DoesNotThrow(() => service.TrackInfo("event:x"));
             Assert.AreEqual(1, survivor.InfoCalls.Count, "Backend after a throwing one must still receive the event.");

@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.0.0] - 2026-11-06
+
+Breaking release for projects on Zenject or Reflex. VContainer projects upgrade with no code changes.
+
+### Changed
+
+- `GDF.Analytics.Internal.AnalyticsService` is `public sealed`, so any DI container can bind it.
+
+### Removed
+
+- Zenject installer (`AnalyticsZenjectInstaller`) and Reflex installer (`AnalyticsReflexInstaller`). The README
+  section "Using with Zenject / Reflex" shows the replacement bindings.
+
 ## [1.0.1] - 2026-11-02
 
 ### Changed
